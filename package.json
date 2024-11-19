@@ -4,11 +4,10 @@
   "description": "This is built for the Interview Test",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
-    "server": "nodemon server.js",
+    "start": "node api/server.js", 
+    "server": "nodemon api/server.js", 
     "client": "cd client && npm start",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"" 
   },
   "keywords": [],
   "author": "",

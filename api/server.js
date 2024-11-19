@@ -1,36 +1,34 @@
+// api/server.js
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const bodyParser = require('body-parser');
 const path = require('path');
 require('dotenv').config();
 
 const app = express();
+const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 
 // MongoDB Connection
-mongoose
-  .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('MongoDB connected'))
-  .catch((err) => console.error(err));
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log('MongoDB connected'))
+    .catch(err => console.error(err));
 
 // API Routes
 app.use('/api/students', require('./routes/studentRoutes'));
 app.use('/api/subjects', require('./routes/subjectRoutes'));
 
-// React App Route
-if (process.env.NODE_ENV === 'production') {
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, '../client/build')));
 
-// The "catchall" handler: for any request that doesn't match one above, send back React's index.html file.
+// The catchall handler: for any request that doesn't match one above, send back React's index.html file.
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname + '/../client/build/index.html'));
+    res.sendFile(path.join(__dirname + '/../client/build/index.html'));
 });
-}
 
-// Export as a Serverless Function
-module.exports = app;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
