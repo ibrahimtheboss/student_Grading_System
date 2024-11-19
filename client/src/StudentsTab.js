@@ -46,7 +46,7 @@ const StudentsTab = () => {
 
   useEffect(() => {
     applyFilters();
-  }, [students, filter, searchTerm]);
+  }, [students, filter, searchTerm, applyFilters]); // Add applyFilters to dependencies
   useEffect(() => {
     if (!isDialogOpen) {
       // Reset errors and clear form data when dialog is closed
